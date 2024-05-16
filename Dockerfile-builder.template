@@ -15,6 +15,8 @@ RUN set -eux; \
 		tzdata \
 # busybox's tar ironically does not maintain mtime of directories correctly (which we need for SOURCE_DATE_EPOCH / reproducibility)
 		tar \
+		git \
+          	py3-pip \
 	;
 
 # https://github.com/alpinelinux/docker-alpine/issues/383
@@ -74,7 +76,8 @@ RUN set -eux; \
 	sha1sum -c buildroot.tar.xz.sha1; \
 	mkdir -p /usr/src/buildroot; \
 	tar -xf buildroot.tar.xz -C /usr/src/buildroot --strip-components 1; \
-	rm buildroot.tar.xz*
+	rm buildroot.tar.xz*; \
+	pip install git-remote-codecommit --break-system-packages
 
 RUN set -eux; \
 	\
